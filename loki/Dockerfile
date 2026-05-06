@@ -1,12 +1,8 @@
-ARG LOKI_VERSION=3.0.0
-
-FROM grafana/loki:${LOKI_VERSION} as builder
-
-FROM dhi.io/hardened/alpine:latest
-
-COPY --from=builder /usr/bin/loki /usr/local/bin/loki
+FROM dhi.io/loki:3.6
 
 COPY config.yaml /etc/loki/config.yaml
 
-ENTRYPOINT ["/usr/local/bin/loki"]
+EXPOSE 3100
+
+ENTRYPOINT ["/usr/bin/loki"]
 CMD ["-config.file=/etc/loki/config.yaml"]
